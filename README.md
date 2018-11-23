@@ -36,3 +36,8 @@ npm i nodemon -g
     "auto": "nodemon ./bin/www"
   },
 ```
+
+- 安装jsonwebtoken
+```$xslt
+yarn add jsonwentoken
+```
