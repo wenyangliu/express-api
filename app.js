@@ -12,7 +12,7 @@ var foodsRouter = require('./routes/foods');
 var app = express();
 
 
-mongoose.connect('mongodb://localhost:27017/local', {useNewUrlParser: true})
+mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true})
 
 
 // view engine setup
