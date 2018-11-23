@@ -4,6 +4,7 @@ const FoodModel = require('../models/food.model')
 
 // 列表
 router.get('/', function(req, res, next) {
+    console.log(req.user)
     FoodModel.find().exec(function(err, foods) {
         res.json(foods)
     })

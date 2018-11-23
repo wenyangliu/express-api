@@ -3,10 +3,10 @@ mongoose.Promise = global.Promise
 
 
 const userSchema = new mongoose.Schema({
-    username: String,
-    email: String
+    username: {type: String},
+    password: {type: String}
 })
 
-const model = mongoose.model('user', userSchema)
+const model = mongoose.model('users', userSchema)
 
 module.exports = model
