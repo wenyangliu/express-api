@@ -41,3 +41,17 @@ npm i nodemon -g
 ```$xslt
 yarn add jsonwentoken
 ```
+- 安装 formidable (用于上传图片)
+```$xslt
+yarn add formidable
+```
+- 解决跨域问题 (在app.js加下面一段代码)
+```$xslt
+app.all('/*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+});
+```

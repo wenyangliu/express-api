@@ -30,38 +30,47 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// 验证token
-app.use(function (req, res, next) {
-    const url = req.originalUrl;
-    const secretOrPrivateKey = "wenyang";
-    const token = req.headers['authorization']
-    if (token) {
-        jwt.verify(token, secretOrPrivateKey, function (err, decode) {
-            if (err) {
-                if (url.indexOf("/api") !== 0) {
-                    return res.status(401).send(err);
-
-                } else {
-                    next();
-                }
-            } else {
-                req.decode = decode;
-                const username = decode.username;
-                UserModel.findOne({username: username}, function (err, user) {
-                    if (!err) {
-                        req.user = user;
-                        next();
-                    }
-                });
-            }
-        });
-    } else {
-        if (url.indexOf("/api") !== 0) {
-            return res.status(401).send({msg: '无权限'});
-        }
-        next();
-    }
+app.all('/*', function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
 });
+
+
+// 验证token
+// app.use(function (req, res, next) {
+//     const url = req.originalUrl;
+//     const secretOrPrivateKey = "wenyang";
+//     const token = req.headers['authorization']
+//     if (token) {
+//         jwt.verify(token, secretOrPrivateKey, function (err, decode) {
+//             if (err) {
+//                 if (url.indexOf("/api") !== 0) {
+//                     return res.status(401).send(err);
+//
+//                 } else {
+//                     next();
+//                 }
+//             } else {
+//                 req.decode = decode;
+//                 const username = decode.username;
+//                 UserModel.findOne({username: username}, function (err, user) {
+//                     if (!err) {
+//                         req.user = user;
+//                         next();
+//                     }
+//                 });
+//             }
+//         });
+//     } else {
+//         if (url.indexOf("/api") !== 0) {
+//             return res.status(401).send({msg: '无权限'});
+//         }
+//         next();
+//     }
+// });
 
 
 app.use('/', indexRouter);
