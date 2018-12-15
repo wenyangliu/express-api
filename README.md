@@ -55,3 +55,8 @@ app.all('/*', function(req, res, next) {
     next();
 });
 ```
+- 安装gm 【图片压缩】 (先安装 GraphicsMagick-1.3.30-Q16-win64-dll 软件)
+- 如果有问题可以重启下电脑
+```$xslt
+yarn add gm
+```
