@@ -11,6 +11,8 @@ const UserModel = require('./models/user.model')
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const foodsRouter = require('./routes/foods');
+const keywordsRouter = require('./routes/keywords');
+const alarmsRouter = require('./routes/alarms');
 const apiRouter = require('./routes/api')
 
 const app = express();
@@ -32,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Methods', 'PUT, PATCH, GET, POST, DELETE, OPTIONS');
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
@@ -76,6 +78,8 @@ app.all('/*', function(req, res, next) {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/foods', foodsRouter);
+app.use('/keywords', keywordsRouter)
+app.use('/alarms', alarmsRouter)
 app.use('/api', apiRouter)
 
 // catch 404 and forward to error handler

@@ -19,6 +19,7 @@ router.post('/login', function (req, res, next) {
         if (!user) return res.status(401).send({msg: "未找到此人"})
         // 缺少密码比对
         let isMatch = true
+        if (password !== user.password) isMatch = false
         if (isMatch) {
             const content = {username} // 要生成token的主题信息
             const secretOrPrivateKey = "wenyang";
@@ -31,7 +32,10 @@ router.post('/login', function (req, res, next) {
                 user: user
             })
         } else {
-            return res.status(401).send("密码错误")
+            return res.status(401).send({
+                success: false,
+                msg: '密码错误'
+            })
         }
     })
 })
