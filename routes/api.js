@@ -1,13 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const UserModel = require('../models/user.model')
+const utils = require('../utils')
 const jwt = require('jsonwebtoken')
-const formidable = require('formidable'),
-    fs = require('fs'),
-    gm = require('gm')
-    TITLE = 'formidable上传示例',
+const fs = require('fs')
+const gm = require('gm')
+const formidable = require('formidable')
+const TITLE = 'formidable上传示例',
     AVATAR_UPLOAD_FOLDER = '/avatar/',
-    domain = "http://localhost:3000";
+    domain = "http://localhost:3000"
 
 // 登录
 router.post('/login', function (req, res, next) {
@@ -17,9 +18,9 @@ router.post('/login', function (req, res, next) {
         if (err) return res.send(err)
 
         if (!user) return res.status(401).send({msg: "未找到此人"})
-        // 缺少密码比对
-        let isMatch = true
-        if (password !== user.password) isMatch = false
+        // 密码比对
+        let isMatch = utils.compare(password, user.password)
+        console.log(isMatch)
         if (isMatch) {
             const content = {username} // 要生成token的主题信息
             const secretOrPrivateKey = "wenyang";
@@ -48,6 +49,7 @@ router.post('/register', function (req, res, next) {
     UserModel.findOne({username}, function (err, user) {
         if (err) return res.send(err)
         if (user) return res.status(403).send({msg: "已注册"})
+        req.body.password = utils.hashPwd(password) // 密码加密
         UserModel.create(req.body, function (err, user) {
             res.json({
                 success: true,
