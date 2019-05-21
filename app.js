@@ -17,8 +17,8 @@ const apiRouter = require('./routes/api')
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true})
-// mongoose.connect('mongodb://remotetest:abc123@119.29.33.237:27017/test', {useNewUrlParser: true})
+// mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true})
+mongoose.connect('mongodb://remotetest:abc123@119.29.33.237:27017/test', {useNewUrlParser: true})
 
 
 // view engine setup
